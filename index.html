@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bruno Guida — Analista de Dados</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0f1e;
+    --bg2: #0f1629;
+    --card: #131c35;
+    --border: rgba(99,179,237,0.12);
+    --accent: #38bdf8;
+    --accent2: #818cf8;
+    --green: #34d399;
+    --text: #e2e8f0;
+    --muted: #94a3b8;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2rem;
+    background: rgba(10,15,30,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: var(--font-display); font-weight: 700; font-size: 1.1rem; color: var(--accent); letter-spacing: -0.5px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { color: var(--muted); text-decoration: none; font-size: 0.9rem; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+    width: 800px; height: 800px;
+    background: radial-gradient(circle, rgba(56,189,248,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-inner { max-width: 760px; width: 100%; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(56,189,248,0.08); border: 1px solid rgba(56,189,248,0.2);
+    color: var(--accent); font-size: 0.8rem; font-weight: 500; letter-spacing: 0.05em;
+    padding: 4px 14px; border-radius: 100px; margin-bottom: 1.5rem;
+  }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
+  .hero h1 {
+    font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.8rem);
+    font-weight: 700; line-height: 1.1; letter-spacing: -1px;
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 span { color: var(--accent); }
+  .hero-sub { font-size: 1.1rem; color: var(--muted); max-width: 540px; margin-bottom: 2.5rem; line-height: 1.8; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--accent); color: #0a0f1e;
+    font-weight: 600; font-size: 0.9rem;
+    padding: 0.75rem 1.5rem; border-radius: 8px;
+    text-decoration: none; transition: opacity 0.2s;
+  }
+  .btn-primary:hover { opacity: 0.85; }
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    border: 1px solid var(--border); color: var(--text);
+    font-weight: 500; font-size: 0.9rem;
+    padding: 0.75rem 1.5rem; border-radius: 8px;
+    text-decoration: none; transition: border-color 0.2s, color 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* SECTIONS */
+  section { padding: 5rem 2rem; max-width: 900px; margin: 0 auto; }
+  .section-label {
+    font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+    color: var(--accent); text-transform: uppercase; margin-bottom: 0.5rem;
+  }
+  .section-title {
+    font-family: var(--font-display); font-size: clamp(1.6rem, 3vw, 2.2rem);
+    font-weight: 700; letter-spacing: -0.5px; margin-bottom: 2.5rem; color: var(--text);
+  }
+
+  /* SOBRE */
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+  .about-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.5rem;
+  }
+  .about-card h3 { font-family: var(--font-display); font-size: 1rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--accent2); }
+  .about-card p { font-size: 0.9rem; color: var(--muted); line-height: 1.7; }
+  .about-text { font-size: 1rem; color: var(--muted); line-height: 1.9; margin-bottom: 2rem; }
+
+  /* FERRAMENTAS */
+  .tools-grid { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+  .tool-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 8px; padding: 0.5rem 1rem;
+    font-size: 0.875rem; font-weight: 500; color: var(--text);
+    transition: border-color 0.2s;
+  }
+  .tool-badge:hover { border-color: var(--accent); }
+  .tool-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .dot-blue { background: #3776AB; }
+  .dot-orange { background: #F2C811; }
+  .dot-cyan { background: #00BCD4; }
+  .dot-green { background: #34d399; }
+  .dot-yellow { background: #facc15; }
+  .dot-red { background: #f87171; }
+  .dot-purple { background: #818cf8; }
+
+  /* FORMAÇÃO */
+  .edu-list { display: flex; flex-direction: column; gap: 1rem; }
+  .edu-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem 1.5rem;
+    display: flex; align-items: flex-start; gap: 1rem;
+  }
+  .edu-icon {
+    width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+    background: rgba(129,140,248,0.12); border: 1px solid rgba(129,140,248,0.2);
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+  }
+  .edu-card h3 { font-size: 0.95rem; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+  .edu-card p { font-size: 0.85rem; color: var(--muted); }
+
+  /* CONTATO */
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+  .contact-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 12px; padding: 1.25rem;
+    text-decoration: none; color: var(--text);
+    transition: border-color 0.2s, transform 0.2s;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .contact-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .contact-icon {
+    width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 1.2rem;
+  }
+  .ci-linkedin { background: rgba(10,102,194,0.15); }
+  .ci-gmail { background: rgba(234,67,53,0.15); }
+  .ci-insta { background: rgba(228,64,95,0.15); }
+  .ci-wpp { background: rgba(37,211,102,0.15); }
+  .contact-card span { font-size: 0.85rem; color: var(--muted); display: block; }
+  .contact-card strong { font-size: 0.9rem; font-weight: 500; }
+
+  /* DIVIDER */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 0 2rem; }
+
+  /* FOOTER */
+  footer {
+    text-align: center; padding: 2rem;
+    font-size: 0.8rem; color: var(--muted);
+    border-top: 1px solid var(--border);
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 1rem; }
+    .nav-links { gap: 1rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    .hero-actions { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Bruno Guida</div>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#ferramentas">Ferramentas</a></li>
+    <li><a href="#formacao">Formação</a></li>
+    <li><a href="#contato">Contato</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-eyebrow"><span class="dot"></span> Disponível para oportunidades</div>
+    <h1>Olá, sou o<br /><span>Bruno Guida</span></h1>
+    <p class="hero-sub">Analista de Dados com 1 ano de experiência transformando dados em insights que apoiam decisões estratégicas. Baseado em Vila Prudente, São Paulo.</p>
+    <div class="hero-actions">
+      <a href="#contato" class="btn-primary">Entre em contato</a>
+      <a href="https://github.com/Brunoguida1997" target="_blank" class="btn-outline">Ver GitHub</a>
+    </div>
+  </div>
+</div>
+
+<hr class="divider" />
+
+<section id="sobre">
+  <div class="section-label">Sobre mim</div>
+  <div class="section-title">Dados como linguagem,<br />insights como resultado</div>
+  <p class="about-text">Tenho 28 anos e atuo como Analista de Dados, com foco em transformar volumes de dados em informações claras e acionáveis para times e líderes. Sou formado em Análise e Desenvolvimento de Sistemas e pós-graduado em Inteligência Artificial e Ciência de Dados.</p>
+  <div class="about-grid">
+    <div class="about-card">
+      <h3>Análise & Visualização</h3>
+      <p>Criação de dashboards interativos e relatórios estratégicos com Power BI, Python e SQL para apoiar a tomada de decisão.</p>
+    </div>
+    <div class="about-card">
+      <h3>Inteligência Artificial</h3>
+      <p>Pós-graduado em IA e Ciência de Dados, com visão aplicada ao uso de modelos e automações no contexto de negócios.</p>
+    </div>
+    <div class="about-card">
+      <h3>Cloud & Infraestrutura</h3>
+      <p>Experiência com AWS para armazenamento e processamento de dados, integrado a pipelines e automações com Git.</p>
+    </div>
+    <div class="about-card">
+      <h3>Comunicação de Dados</h3>
+      <p>Habilidade em traduzir análises complexas em narrativas claras para públicos técnicos e não técnicos.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section id="ferramentas">
+  <div class="section-label">Stack</div>
+  <div class="section-title">Ferramentas & Tecnologias</div>
+  <div class="tools-grid">
+    <div class="tool-badge"><span class="tool-dot dot-blue"></span>Python</div>
+    <div class="tool-badge"><span class="tool-dot dot-cyan"></span>SQL</div>
+    <div class="tool-badge"><span class="tool-dot dot-orange"></span>Power BI</div>
+    <div class="tool-badge"><span class="tool-dot dot-green"></span>Excel</div>
+    <div class="tool-badge"><span class="tool-dot dot-green"></span>Google Sheets</div>
+    <div class="tool-badge"><span class="tool-dot dot-yellow"></span>AWS</div>
+    <div class="tool-badge"><span class="tool-dot dot-red"></span>Git</div>
+    <div class="tool-badge"><span class="tool-dot dot-red"></span>HTML5</div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section id="formacao">
+  <div class="section-label">Educação</div>
+  <div class="section-title">Formação acadêmica</div>
+  <div class="edu-list">
+    <div class="edu-card">
+      <div class="edu-icon">🎓</div>
+      <div>
+        <h3>Pós-Graduação em Inteligência Artificial e Ciência de Dados</h3>
+        <p>Especialização com foco em modelos preditivos, aprendizado de máquina e análise avançada de dados.</p>
+      </div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-icon">💻</div>
+      <div>
+        <h3>Graduação em Análise e Desenvolvimento de Sistemas</h3>
+        <p>Fundamentos de desenvolvimento, banco de dados, lógica de programação e engenharia de software.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider" />
+
+<section id="contato">
+  <div class="section-label">Contato</div>
+  <div class="section-title">Vamos conversar?</div>
+  <div class="contact-grid">
+    <a href="https://www.linkedin.com/in/bruno-guida-605580185" target="_blank" class="contact-card">
+      <div class="contact-icon ci-linkedin">💼</div>
+      <div><span>LinkedIn</span><strong>bruno-guida</strong></div>
+    </a>
+    <a href="mailto:brunoguida.bgn1997@gmail.com" class="contact-card">
+      <div class="contact-icon ci-gmail">✉️</div>
+      <div><span>E-mail</span><strong>brunoguida.bgn1997</strong></div>
+    </a>
+    <a href="https://www.instagram.com/brunoguida97/" target="_blank" class="contact-card">
+      <div class="contact-icon ci-insta">📸</div>
+      <div><span>Instagram</span><strong>@brunoguida97</strong></div>
+    </a>
+    <a href="https://wa.me/5511949852404" target="_blank" class="contact-card">
+      <div class="contact-icon ci-wpp">💬</div>
+      <div><span>WhatsApp</span><strong>(11) 94985-2404</strong></div>
+    </a>
+  </div>
+</section>
+
+<footer>
+  Feito com dedicação por Bruno Guida · São Paulo, SP
+</footer>
+
+</body>
+</html>
